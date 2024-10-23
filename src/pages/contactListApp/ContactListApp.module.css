@@ -1,0 +1,21 @@
+p,
+h2 {
+  font-size: 0.7rem;
+  color: #666;
+  /* color: #f7f7f7; */
+  font-weight: 400;
+}
+
+.contactList {
+  width: 950px;
+  margin: 0% auto;
+  border-radius: 3px;
+  background-color: #f7f7f7;
+}
+
+.container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  padding-block: 1rem;
+}
