@@ -13,7 +13,7 @@ function Navbar() {
         <input
           type="text"
           placeholder="Search Person..."
-          class="w-full px-4 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out focus:border-transparent  placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
+          className="w-full px-4 py-1 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out focus:border-transparent  placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
         />
       </div>
     </div>

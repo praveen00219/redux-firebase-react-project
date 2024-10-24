@@ -15,7 +15,7 @@ h2 {
 
 .container {
   display: flex;
-  gap: 2rem;
+  /* gap: 2rem; */
   justify-content: space-between;
   padding-block: 1rem;
 }
