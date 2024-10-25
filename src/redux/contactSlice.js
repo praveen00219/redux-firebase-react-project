@@ -156,6 +156,7 @@ const contactSlice = createSlice({
             ...action.payload,
           };
         }
+        state.id = "";
         state.loading = false;
       })
       .addCase(updateContact.rejected, (state, action) => {

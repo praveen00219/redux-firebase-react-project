@@ -53,7 +53,7 @@ function Sidebar() {
     };
 
     fetchExistingContactAndTotal();
-  }, [existingContactId]);
+  }, [existingContactId, totalContacts]);
 
   // Handle file selection
   const handleFileChange = (e) => {

@@ -28,7 +28,7 @@ function ContactTableList() {
   // Fetch contacts on component mount
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [contacts]);
 
   return (
     <div className="px-6 flex flex-1 flex-col items-center">
