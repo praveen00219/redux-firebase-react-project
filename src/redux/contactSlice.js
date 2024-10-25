@@ -70,6 +70,25 @@ export const updateContact = createAsyncThunk(
   }
 );
 
+// Async thunk for Add to Favourites contact
+// export const addToFavContact = createAsyncThunk(
+//   "contactList/deleteContact",
+//   async (favContactId, { rejectWithValue }) => {
+//     try {
+//       const response = await fetch(
+//         `${BASE_URL}/contact-list/${favContactId}.json`
+//       ).then((data) => data.json());
+
+//       if (!response.ok) {
+//         throw new Error("Failed to delete contact");
+//       }
+//       // return contactId;
+//     } catch (error) {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 // Async thunk for fetching contacts
 export const fetchContacts = createAsyncThunk(
   "contactList/fetchContacts",
@@ -91,10 +110,29 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+// Async thunk for fetching total contact count
+export const fetchTotalContacts = createAsyncThunk(
+  "contactList/fetchTotalContacts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}/contact-list.json`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch total contacts");
+      }
+      const data = await response.json();
+      // console.log("data", data);
+      return Object.keys(data).length; // Return the total count of contacts
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 // Initial state
 const initialState = {
   id: "",
   contacts: [],
+  totalContacts: 0,
   loading: false,
   error: null,
 };
@@ -106,6 +144,9 @@ const contactSlice = createSlice({
     setExistingContactID: (state, action) => {
       state.id = action.payload;
     },
+    fetchTotalContacts: (state, action) => {
+      state.totalContacts = Object.keys(totalData).length;
+    },
   },
   extraReducers: (builder) => {
     // Add Contact
@@ -116,6 +157,7 @@ const contactSlice = createSlice({
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.contacts.push(action.payload); // Add the new contact with the ID
+        fetchTotalContacts(action.payload.id);
         state.loading = false;
       })
       .addCase(addContact.rejected, (state, action) => {
@@ -175,6 +217,21 @@ const contactSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchContacts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+
+    // Fetch Total Contacts
+    builder
+      .addCase(fetchTotalContacts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTotalContacts.fulfilled, (state, action) => {
+        // console.log(action.payload);
+        state.totalContacts = action.payload;
+      })
+      .addCase(fetchTotalContacts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

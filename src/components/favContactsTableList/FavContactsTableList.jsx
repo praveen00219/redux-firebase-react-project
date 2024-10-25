@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import ContactDataListing from "./ContactDataListing"; // Import the component responsible for displaying each row
+import FavContactDataListing from "./FavContactDataListing";
 
-function ContactTableList() {
-  const [contacts, setContacts] = useState([]);
+function FavContactsTableList() {
+  const [favContacts, setFavContacts] = useState([]);
 
-  // Fetching contacts from Firebase
+  // Fetching fav contacts from Firebase
   const fetchContacts = async () => {
     const response = await fetch(
-      "https://contact-list-app-ae749-default-rtdb.asia-southeast1.firebasedatabase.app/contact-list.json"
+      "https://contact-list-app-ae749-default-rtdb.asia-southeast1.firebasedatabase.app/fav-contact-list.json"
     );
     const data = await response.json();
 
@@ -22,13 +22,13 @@ function ContactTableList() {
         photoUrl: data[key].photoUrl,
       });
     }
-    setContacts(contactsData);
+    setFavContacts(contactsData);
   };
 
   // Fetch contacts on component mount
   useEffect(() => {
     fetchContacts();
-  }, [contacts]);
+  }, [favContacts]);
 
   return (
     <div className="px-6 flex flex-1 flex-col items-center">
@@ -51,12 +51,12 @@ function ContactTableList() {
             </tr>
           </thead>
           <tbody>
-            {contacts.length > 0 ? (
-              <ContactDataListing contacts={contacts} />
+            {favContacts.length > 0 ? (
+              <FavContactDataListing favContacts={favContacts} />
             ) : (
               <tr className="text-red-400 font-semibold text-xl">
                 <th colSpan="4" rowSpan="5" className="text-center h-[65vh]">
-                  Contact List Is Empty!
+                  Fovourites Contact List Is Empty!
                 </th>
               </tr>
             )}
@@ -67,4 +67,4 @@ function ContactTableList() {
   );
 }
 
-export default ContactTableList;
+export default FavContactsTableList;

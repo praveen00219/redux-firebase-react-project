@@ -3,15 +3,20 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebaseConfig";
 import OfficeWork from "../../assets/Office Work.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, updateContact } from "../../redux/contactSlice";
+import {
+  addContact,
+  fetchTotalContacts,
+  updateContact,
+} from "../../redux/contactSlice";
 import CountContact from "./CountContact";
 
 function Sidebar() {
   const dispatch = useDispatch();
+  const totalContacts = useSelector((state) => state.contacts.totalContacts);
+
   const existingContactId = useSelector((state) => state.contacts.id);
 
   const [file, setFile] = useState(null); // Handle file input
-  const [totalContacts, setTotalContacts] = useState(0);
   const [loading, setLoading] = useState(false); // Loading state for the form
   const [error, setError] = useState(null); // Error state
 
@@ -41,19 +46,21 @@ function Sidebar() {
         }
 
         // Fetch total contacts
-        const totalResponse = await fetch(
-          `https://contact-list-app-ae749-default-rtdb.asia-southeast1.firebasedatabase.app/contact-list.json`
-        );
-        const totalData = await totalResponse.json();
-        setTotalContacts(Object.keys(totalData).length);
+        // const totalResponse = await fetch(
+        //   `https://contact-list-app-ae749-default-rtdb.asia-southeast1.firebasedatabase.app/contact-list.json`
+        // );
+        // const totalData = await totalResponse.json();
+        // console.log("totalData", totalData);
+        // dispatch(fetchTotalContacts(totalData));
       } catch (err) {
         setError("Failed to fetch data. Please try again later.");
         console.error(err);
       }
     };
 
+    dispatch(fetchTotalContacts());
     fetchExistingContactAndTotal();
-  }, [existingContactId, totalContacts]);
+  }, [existingContactId || totalContacts]);
 
   // Handle file selection
   const handleFileChange = (e) => {
@@ -175,7 +182,9 @@ function Sidebar() {
                 type="text"
                 placeholder="First Name"
                 name="name"
+                required
                 value={userData.name}
+                pattern="[A-Za-z]+"
                 onChange={inputHandler}
                 className="w-full px-2 py-1 border-b border-[#57bbd3] rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
               />
@@ -183,6 +192,8 @@ function Sidebar() {
                 type="text"
                 placeholder="Surname"
                 name="surname"
+                required
+                pattern="[A-Za-z]+"
                 value={userData.surname}
                 onChange={inputHandler}
                 className="w-full px-2 py-1 border-b border-[#57bbd3] rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
@@ -194,6 +205,10 @@ function Sidebar() {
             type="text"
             placeholder="Tel +91 123456****"
             name="tel"
+            required
+            pattern="^[1-9]\d*$"
+            maxLength="10"
+            minLength="10"
             value={userData.tel}
             onChange={inputHandler}
             className="w-full px-2 py-1 border-b border-[#57bbd3] rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
