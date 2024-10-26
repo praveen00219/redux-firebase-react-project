@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 // Firebase base URL
 const BASE_URL =
   "https://contact-list-app-ae749-default-rtdb.asia-southeast1.firebasedatabase.app";
@@ -158,11 +158,13 @@ const contactSlice = createSlice({
       .addCase(addContact.fulfilled, (state, action) => {
         state.contacts.push(action.payload); // Add the new contact with the ID
         fetchTotalContacts(action.payload.id);
+        toast.success("Contact added successfully!");
         state.loading = false;
       })
       .addCase(addContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error("Failed to add contact!");
       });
 
     // Delete Contact
@@ -176,10 +178,12 @@ const contactSlice = createSlice({
           (contact) => contact.id !== action.payload
         );
         state.loading = false;
+        toast.success("Contact deleted successfully!");
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error("Failed to delete contact!");
       });
 
     // Update Contact
@@ -200,10 +204,12 @@ const contactSlice = createSlice({
         }
         state.id = "";
         state.loading = false;
+        toast.success("Contact updated successfully!");
       })
       .addCase(updateContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        toast.error("Failed to update contact!");
       });
 
     // Fetch Contacts

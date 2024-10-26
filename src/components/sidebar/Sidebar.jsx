@@ -9,6 +9,7 @@ import {
   updateContact,
 } from "../../redux/contactSlice";
 import CountContact from "./CountContact";
+import Navbar from "../navbar/Navbar";
 
 function Sidebar() {
   const dispatch = useDispatch();
@@ -132,11 +133,10 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-[25%] h-[70vh] border-r-2 px-4">
+    <div className="w-[25%]  border-r-2 px-4">
+      <Navbar />
       <form onSubmit={submitHandler}>
-        <>
-          <CountContact totalContacts={totalContacts} />
-        </>
+        <CountContact totalContacts={totalContacts} />
         <div>
           <img src={OfficeWork} alt="Office Work" />
         </div>
@@ -184,7 +184,6 @@ function Sidebar() {
                 name="name"
                 required
                 value={userData.name}
-                pattern="[A-Za-z]+"
                 onChange={inputHandler}
                 className="w-full px-2 py-1 border-b border-[#57bbd3] rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"
               />
@@ -193,7 +192,6 @@ function Sidebar() {
                 placeholder="Surname"
                 name="surname"
                 required
-                pattern="[A-Za-z]+"
                 value={userData.surname}
                 onChange={inputHandler}
                 className="w-full px-2 py-1 border-b border-[#57bbd3] rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 ease-in-out placeholder-gray-400 placeholder-opacity-75 placeholder-italic placeholder:text-sm"

@@ -7,9 +7,10 @@ h2 {
 }
 
 .contactList {
-  width: 950px;
-  margin: 0% auto;
-  border-radius: 3px;
+  max-width: 950px;
+  /* margin: 0% auto; */
+  margin: 1rem;
+  border-radius: 5px;
   background-color: #f7f7f7;
 }
 
