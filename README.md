@@ -50,7 +50,7 @@ A simple and intuitive web application to manage your contacts, including favori
 
 ## Live Demo
 
-- Check out live demo of the project : [Here](https://praveen-makecontactapp-redux-firebase.netlify.app/favouritesContactList)
+- Check out live demo of the project : [Here](https://praveen-makecontactapp-redux-firebase.netlify.app/)
 
 ## ⚙️ Installation
 
